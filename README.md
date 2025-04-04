@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mavericks Associations | Enterprise Document Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --danger: #ef4444;
+            --success: #10b981;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(at 80% 0%, hsla(217,91%,15%,0.5) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(215,78%,21%,0.3) 0px, transparent 50%);
+        }
+        
+        header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 5rem 0 4rem;
+        }
+        
+        h1 {
+            font-size: 2.75rem;
+            margin-bottom: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #f8fafc, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+        
+        .upload-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .upload-area {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary);
+        }
+        
+        .dropzone {
+            border: 2px dashed var(--border);
+            border-radius: 10px;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dropzone.active {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .upload-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--primary);
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .features {
+            padding: 5rem 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+        
+        .section-subtitle {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .security-badge i {
+            color: var(--success);
+            font-size: 1.5rem;
+        }
+        
+        .security-text {
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.25rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .upload-area {
+                padding: 1.5rem;
+            }
+            
+            .dropzone {
+                padding: 2.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-balance-scale logo-icon"></i>
+                    <span>Mavericks Association</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#">Features</a>
+                    <a href="#">Solutions</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">Resources</a>
+                    <a href="#" class="btn btn-outline">Request Demo</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Enterprise-Grade Contract Intelligence</h1>
+                <p class="subtitle">
+                    AI-powered legal document analysis trusted by top law firms and corporations. 
+                    Instantly identify risks, extract key clauses, and ensure compliance with 
+                    military-grade security.
+                </p>
+                
+                <div class="upload-container">
+                    <div class="upload-area">
+                        <div class="dropzone" id="dropzone">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h3 class="upload-title">Upload Legal Documents</h3>
+                            <p class="upload-subtitle">
+                                Drag & drop contracts, agreements, or NDAs in PDF, DOCX, or TXT format
+                            </p>
+                            <input type="file" id="fileInput" class="file-input" accept=".pdf,.docx,.txt">
+                            <button class="btn" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-file-upload"></i> Select Files
+                            </button>
+                            
+                            <div class="security-badge">
+                                <i class="fas fa-lock"></i>
+                                <div class="security-text">
+                                    <strong>256-bit Encryption</strong> • Files processed securely • SOC 2 Compliant
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Trusted by Legal Teams Worldwide</h2>
+                    <p class="section-subtitle">
+                        Advanced document analysis powered by AI and legal expertise
+                    </p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-search-dollar"></i>
+                        </div>
+                        <h3 class="feature-title">Risk Detection</h3>
+                        <p class="feature-desc">
+                            Automatically flags unfavorable terms, hidden liabilities, and non-standard clauses 
+                            with 98% accuracy.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h3 class="feature-title">Smart Summarization</h3>
+                        <p class="feature-desc">
+                            Extracts obligations, deadlines, and parties while maintaining full 
+                            document context and relationships.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Compliance Audit</h3>
+                        <p class="feature-desc">
+                            Checks against regulatory requirements (GDPR, CCPA) and internal 
+                            compliance policies.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h3 class="feature-title">Clause Comparison</h3>
+                        <p class="feature-desc">
+                            Benchmarks against your firm's approved language and industry standards.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3 class="feature-title">Collaborative Review</h3>
+                        <p class="feature-desc">
+                            Share annotated documents with team members and clients securely.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Analytics Dashboard</h3>
+                        <p class="feature-desc">
+                            Track negotiation trends, common red flags, and contract lifecycle metrics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i class="fas fa-balance-scale logo-icon"></i>
+                    <span>Mavericks Association</span>
+                </div>
+                <div class="copyright">
+                    © 2023 LexiScan Technologies. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Enhanced file upload handling
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        
+        // Handle drag and drop
+        ['dragover', 'dragenter'].forEach(event => {
+            dropzone.addEventListener(event, (e) => {
+                e.preventDefault();
+                dropzone.classList.add('active');
+            });
+        });
+        
+        ['dragleave', 'dragend'].forEach(event => {
+            dropzone.addEventListener(event, () => {
+                dropzone.classList.remove('active');
+            });
+        });
+        
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('active');
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFileUpload(e.dataTransfer.files[0]);
+            }
+        });
+        
+        // Handle file selection
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+        
+        function handleFileUpload(file) {
+            console.log('File selected for analysis:', file);
+            
+            // Update UI
+            dropzone.innerHTML = `
+                <div class="upload-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <h3 class="upload-title">${file.name}</h3>
+                <p class="upload-subtitle">
+                    ${(file.size / 1024 / 1024).toFixed(2)} MB • ${file.type}
+                </p>
+                <div style="margin: 1.5rem 0;">
+                    <div style="background: #334155; height: 6px; border-radius: 3px;">
+                        <div style="background: var(--primary); width: 30%; height: 100%; border-radius: 3px;"></div>
+                    </div>
+                </div>
+                <button class="btn" style="background: var(--success);">
+                    <i class="fas fa-rocket"></i> Analyze Document
+                </button>
+                
+                <div class="security-badge">
+                    <i class="fas fa-lock"></i>
+                    <div class="security-text">
+                        <strong>Secure Analysis In Progress</strong> • AES-256 Encryption • Data Never Stored
+                    </div>
+                </div>
+            `;
+            
+            // Here you would normally:
+            // 1. Upload to your backend
+            // 2. Process with AI
+            // 3. Return results
+        }
+    </script>
+</body>
+</html>
